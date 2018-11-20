@@ -41,11 +41,11 @@ const resolvers = {
         throw new ForbiddenError("You must be logged in!");
       return User.find({});
     },
-    getCurrentUser: async (root, args, { currentUser, User }) => {
-      if (!currentUser) {
-        return null;
-      }
-      const user = await User.findOne({ username: currentUser.username });
+    getCurrentUser: async (root, args, context) => {
+      // if (!context.loggedInUser)
+      // throw new ForbiddenError("You must be logged in!");
+      
+      const user = await User.findOne({ username: args.username });
       return user;
     },
     getUser: (root, args, context) => {
@@ -124,16 +124,16 @@ const resolvers = {
     createProfile: (root, args, context) => {
       // Throw a error if user is not loggedIn
       // loggedIn comes from context passed into Apollo
-      if (!context.loggedInUser)
-        throw new ForbiddenError(
-          "You need to be logged in to create a profile"
-        );
+      // if (!context.loggedInUser)
+      //   throw new ForbiddenError(
+      //     "You need to be logged in to create a profile"
+      //   );
       return Profile.create(args);
     },
     createPlan: (root, args, context) => {
-      if (!context.loggedInUser)
-        throw new ForbiddenError("You need to be logged in to create a Plan");
-      return Profile.create(args);
+      // if (!context.loggedInUser)
+      //   throw new ForbiddenError("You need to be logged in to create a Plan");
+      return Plan.create(args);
     }
   },
   // Creating a new Scalar Type for Date

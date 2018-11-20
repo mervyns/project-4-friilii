@@ -2,7 +2,7 @@ import React, { Fragment } from "react";
 import { Query } from "react-apollo";
 import { GET_CURRENT_USER, CHANGE_EMAIL } from "../../queries";
 import { withRouter } from "react-router-dom";
-import decode from "jwt-decode";
+import withAuth from "../../hoc/withAuth";
 import * as Cookies from "es-cookie";
 
 const initialState = {
@@ -15,7 +15,6 @@ const initialState = {
   passwordMatch: null
 };
 
-
 class UserDetails extends React.Component {
   constructor(props) {
     super();
@@ -23,6 +22,7 @@ class UserDetails extends React.Component {
       ...initialState
     };
   }
+
   clearState() {
     this.setState({ ...initialState });
   }
@@ -34,24 +34,27 @@ class UserDetails extends React.Component {
       [name]: value
     });
   }
+
+  confirmPW() {
+    const { password, passwordConfirm } = this.state;
+    const isMatch = password !== passwordConfirm && password.length <= 7;
+    this.setState({
+      passwordMatch: isMatch
+    });
+  }
+
   render() {
     const { username, password, newEmail } = this.state;
-    const token = Cookies.get("token");
-    const decodedToken = decode(token);
-    console.log(decodedToken);
+
     return (
       <Fragment>
-        <Query query={GET_CURRENT_USER} variables={{
-      username: decodedToken.username,
-}}>
-        {({ data, loading, error }) => {
-          if (loading) return (<h1>Loading</h1>)
-          if (error) return (<h1>Error</h1>)
-          console.log(data)
+        <Query query={GET_CURRENT_USER}>
+        {(getCurrentUser, { data, loading, error }) => {
           return (
-            <h1>{data.getCurrentUser.id}</h1>
+            console.log(data)
           )
       }}
+        
         </Query>
       </Fragment>
     );

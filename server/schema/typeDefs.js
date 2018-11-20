@@ -19,7 +19,7 @@ scalar Date
     id: ID!
     firstName: String!
     lastName: String!
-    birthDate: Date
+    birthDate: String!
     userId: String!
     user: User!
   }
@@ -46,8 +46,8 @@ scalar Date
   type Mutation {
     createUser(username: String!, email: String!, password: String!, role: String): User
     login(username: String!, password: String!): User
-    createProfile(firstName: String!, lastName: String!, birthDate: String!): Profile
-    createPlan(planName: String!, sumInsured: Int!, premium: Int, dateStart: Date, dateEnd: Date) : Plan
+    createProfile(firstName: String!, lastName: String!, birthDate: String!, userId: String!): Profile
+    createPlan(planName: String!, sumInsured: String!, premium: String, dateStart: String!, dateEnd: String!, userId: String!): Plan
     changeEmail(email: String): User
   }
   `;

@@ -43,7 +43,7 @@ class Login extends React.Component {
     event.preventDefault();
     login()
       .then(async ({ data }) => {
-        Cookies.set("jsonwebtoken", data.login.token);
+        Cookies.set("token", data.login.token);
         // await this.props.refetch();
         this.clearState();
         // this.props.history.push('/dashboard');

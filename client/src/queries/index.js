@@ -39,20 +39,40 @@ mutation login(
 `;
 
 
-export const GET_CURRENT_USER = gql`
-    query {
-        getCurrentUser {
-            username
-            email
+export const GET_CURRENT_USER = gql `
+    query($username: String!) {
+        getCurrentUser(username: $username) {
+          id
+          username
+          email
         }
     }
 `;
 
-export const CHANGE_EMAIL = gql`
+export const CHANGE_EMAIL = gql `
     mutation($currentEmail: String!, $newEmail: String!){
         changeEmail(currentEmail: $currentEmail, newEmail: $newEmail){
             username
             email
         }
     }
+`;
+
+export const CREATE_USER_PROFILE = gql `
+mutation($firstName: String!, $lastName: String!, $birthDate: String!, $userId:String!){
+  createProfile(firstName: $firstName, lastName: $lastName, birthDate: $birthDate, userId: $userId){
+    firstName
+    lastName
+  }
+}
+`;
+
+export const CREATE_USER_PLAN = gql `
+mutation($planName: String!, $sumInsured: String!, $premium: String, $dateStart: String!, $dateEnd: String!, $userId: String!){
+  createPlan(planName: $planName, sumInsured: $sumInsured, premium: $premium, dateStart: $dateStart, dateEnd: $dateEnd, userId: $userId){
+    planName
+    sumInsured
+    premium
+  }
+}
 `;

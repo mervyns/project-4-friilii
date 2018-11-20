@@ -20,9 +20,30 @@ export default class Header extends Component {
         >
           Home
         </Menu.Item>
+        <Menu.Item as={Link} to="/signup" 
+          name="Sign Up"
+          active={activeItem === "Sign Up"}
+          onClick={this.handleItemClick}
+        >
+        Sign Up
+        </Menu.Item>
         <Menu.Item as={Link} to="/login" 
           name="Login"
           active={activeItem === "Login"}
+          onClick={this.handleItemClick}
+        >
+        Login
+        </Menu.Item>
+        <Menu.Item as={Link} to="/createprofile" 
+          name="Create Profile"
+          active={activeItem === "Create Profile"}
+          onClick={this.handleItemClick}
+        >
+        Create Profile
+        </Menu.Item>
+        <Menu.Item as={Link} to="/createplan" 
+          name="Create Plan"
+          active={activeItem === "Create Plan"}
           onClick={this.handleItemClick}
         >
         Login

@@ -10,7 +10,11 @@ const graphqlHost =
     : "http://localhost:4000/graphql";
 
 const httpLink = createHttpLink({
-  uri: graphqlHost
+  uri: graphqlHost,
+  onError: ({ networkError, graphQLErrors }) => {
+    console.log('graphQLErrors', graphQLErrors)
+    console.log('networkError', networkError)
+  }
 });
 const AUTH_TOKEN = "token";
 const REFRESH_TOKEN = "refreshToken";
@@ -32,6 +36,7 @@ const middleware = new ApolloLink((operation, forward) => {
 const afterware = new ApolloLink((operation, forward) => {
   return forward(operation).map(response => {
     const context = operation.getContext();
+    console.log(context)
     const {
       response: { headers }
     } = context;
@@ -60,5 +65,6 @@ const link = afterware.concat(middleware.concat(httpLink));
 
 export default new ApolloClient({
   link,
-  cache: new InMemoryCache()
+  cache: new InMemoryCache(),
+  onError: (e) => { console.log(e.graphQLErrors) }
 });

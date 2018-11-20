@@ -24,9 +24,10 @@ const withAuth = conditionFunc => Component => props => {
             return <Login {...props} refetch={refetch} />;
         }
 
-        if (props.session.getCurrentUser == null)
+        if (props.session.getCurrentUser == null){
+        console.log("no user session found")
           return <Login {...props} refetch={refetch} />;
-
+        }
         return conditionFunc(data) ? (
           <Component {...props} />,
           console.log("rendering component")
