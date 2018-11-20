@@ -1,0 +1,25 @@
+{
+  "presets": [
+    ["env", {
+      "modules": false
+    }],
+    "react"
+  ],
+  "plugins": [
+    "transform-object-rest-spread"
+  ],
+  "env": {
+    "development": {
+      "plugins": [
+        "react-hot-loader/babel",
+        "transform-react-jsx-source"
+      ]
+    },
+    "test": {
+      "presets": [
+        "env",
+        "react"
+      ]
+    }
+  }
+}
