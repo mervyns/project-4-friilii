@@ -10,7 +10,9 @@ import {
   Message,
   Grid,
   Segment,
-  Header
+  Header,
+  Dropdown,
+  Select
 } from "semantic-ui-react";
 
 const initialState = {
@@ -22,6 +24,11 @@ const initialState = {
   userId: "",
   error: ""
 };
+
+const planOptions = [
+    {key: 'incomeLoss', name:'incomeLoss', text:'Loss of Income Plan', value: 'incomeLoss'},
+    {key: 'medicalPlan', name: 'medicalPlan',text:'Medical Plan', value: 'medicalPlan'}
+]
 
 class CreatePlan extends React.Component {
   constructor(props) {
@@ -37,8 +44,16 @@ class CreatePlan extends React.Component {
   handleChange(event) {
     const name = event.target.name;
     const value = event.target.value;
+    console.log("changed", event.currentTarget.innerText, event.currentTarget.getAttribute('name'))
     this.setState({
       [name]: value
+    });
+  }
+
+  handleChangeforDropdown(event) {
+    const value = event.currentTarget.getAttribute('name');
+    this.setState({
+      planName:  value
     });
   }
 
@@ -65,7 +80,8 @@ class CreatePlan extends React.Component {
       sumInsured,
       premium,
       dateStart,
-      dateEnd
+      dateEnd,
+      value
     } = this.state;
     const token = Cookies.get("token");
     const decodedToken = decode(token);
@@ -81,7 +97,8 @@ class CreatePlan extends React.Component {
           {({ data, loading, error }) => {
             if (loading) return <h1>Loading</h1>;
             if (error) return <h1>Error</h1>;
-            let currentUserId = data.getCurrentUser.id;
+            let currentUserId = data.getCurrentUser.id
+            let calculatedPremium = parseInt(sumInsured / 45).toFixed(0)
             return (
               <Mutation
                 mutation={CREATE_USER_PLAN}
@@ -89,7 +106,7 @@ class CreatePlan extends React.Component {
                   userId: currentUserId,
                   planName,
                   sumInsured,
-                  premium,
+                  premium: calculatedPremium,
                   dateStart,
                   dateEnd
                 }}
@@ -113,19 +130,21 @@ class CreatePlan extends React.Component {
                           }
                         >
                           <Segment stacked>
-                            <Form.Input
-                              fluid
-                              icon="user"
-                              iconPosition="left"
-                              type="text"
-                              name="planName"
-                              placeholder="planName"
-                              value={planName}
-                              onChange={this.handleChange.bind(this)}
+                              <Form.Input name="planName">
+                        <Dropdown
+                            fluid
+                            name="planName"
+                            type="text"
+                            label='Select your plan'
+                            options={planOptions}
+                            value={planName}
+                            onChange={this.handleChangeforDropdown.bind(this)}
+                            placeholder='Select your Plan'
                             />
+                        </Form.Input>
                             <Form.Input
                               fluid
-                              icon="user"
+                              icon="dollar"
                               iconPosition="left"
                               type="text"
                               name="sumInsured"
@@ -133,14 +152,16 @@ class CreatePlan extends React.Component {
                               value={sumInsured}
                               onChange={this.handleChange.bind(this)}
                             />
+
                             <Form.Input
+                                readOnly
                               fluid
-                              icon="user"
+                              icon="dollar"
                               iconPosition="left"
                               type="text"
                               name="premium"
                               placeholder="premium"
-                              value={premium}
+                              value={calculatedPremium}
                               onChange={this.handleChange.bind(this)}
                             />
                             <Form.Input
