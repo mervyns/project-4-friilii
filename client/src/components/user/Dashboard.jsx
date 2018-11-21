@@ -6,6 +6,7 @@ import decode from "jwt-decode";
 import * as Cookies from "es-cookie";
 import InfoBox from "../layout/InfoBox";
 import ShowPlans from './ShowPlans'
+import ShowProfile from './ShowProfile'
 
 
 const initialState = {
@@ -18,7 +19,7 @@ const initialState = {
   passwordMatch: null
 };
 
-class ShowProfile extends React.Component {
+class Dashboard extends React.Component {
   constructor(props) {
     super();
     this.state = {
@@ -56,7 +57,9 @@ class ShowProfile extends React.Component {
             return (
               <div>
                 <InfoBox username={data.getCurrentUser.username} />
-
+                <div>
+                  <ShowProfile props={data.getCurrentUser.profile}></ShowProfile>
+                </div>
                 <h1>{data.getCurrentUser.profile.firstName}</h1>
                 <h1>{data.getCurrentUser.profile.lastName}</h1>
                 <h1>{data.getCurrentUser.plans[0].planName}</h1>
@@ -70,4 +73,4 @@ class ShowProfile extends React.Component {
   }
 }
 
-export default withRouter(ShowProfile);
+export default withRouter(Dashboard);
