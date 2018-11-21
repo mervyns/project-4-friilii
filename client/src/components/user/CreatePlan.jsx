@@ -51,7 +51,7 @@ class CreatePlan extends React.Component {
   }
 
   handleChangeforDropdown(event) {
-    const value = event.currentTarget.getAttribute('name');
+    const value = event.currentTarget.innerText;
     this.setState({
       planName:  value
     });
@@ -148,7 +148,7 @@ class CreatePlan extends React.Component {
                               iconPosition="left"
                               type="text"
                               name="sumInsured"
-                              placeholder="sumInsured"
+                              placeholder="Amount that you wish to insure yourself for"
                               value={sumInsured}
                               onChange={this.handleChange.bind(this)}
                             />

@@ -49,8 +49,8 @@ const resolvers = {
       return user;
     },
     getUser: (root, args, context) => {
-      if (!context.loggedInUser)
-        throw new ForbiddenError("You must be logged in");
+      // if (!context.loggedInUser)
+      //   throw new ForbiddenError("You must be logged in");
       return User.findById(args.id);
     },
     getProfile: (root, args, context) => {

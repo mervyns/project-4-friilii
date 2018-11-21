@@ -38,7 +38,7 @@ export default class WelcomeActions extends Component {
     event.preventDefault();
     createUser()
       .then(async ({ data }) => {
-        Cookies.set("jsonwebtoken", data.createUser.token);
+        Cookies.set("token", data.createUser.token);
         // await this.props.refetch();
         this.setState({username:""})
         // this.props.history.push("/dashboard");

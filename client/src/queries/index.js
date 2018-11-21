@@ -45,6 +45,18 @@ export const GET_CURRENT_USER = gql `
           id
           username
           email
+          profile {
+            firstName
+            lastName
+            birthDate
+          }
+          plans {
+            id
+            planName
+            sumInsured
+            dateStart
+            dateEnd
+          }
         }
     }
 `;

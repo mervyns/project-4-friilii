@@ -10,6 +10,8 @@ import Login from "./components/auth/Login";
 import UserDetails from './components/auth/UserDetails'
 import CreateProfile from './components/user/CreateProfile'
 import CreatePlan from './components/user/CreatePlan'
+import ShowProfile from './components/user/ShowProfile'
+import Dashboard from './components/user/Dashboard'
 
 const App = () => {
   return (
@@ -21,6 +23,7 @@ const App = () => {
         <Route exact path="/userdetails" component={UserDetails} />
         <Route exact path="/createprofile" component={CreateProfile} />
         <Route exact path="/createplan" component={CreatePlan} />
+        <Route exact path="/dashboard" component={Dashboard} />
       </ApolloProvider>
     </BrowserRouter>
   );
