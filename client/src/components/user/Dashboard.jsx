@@ -9,6 +9,7 @@ import ShowPlans from "./ShowPlans";
 import ShowProfile from "./ShowProfile";
 import CreateClaim from "./CreateClaim";
 import CreatePlan from './CreatePlan';
+import ChatBox from './ChatBox'
 import { Grid } from "semantic-ui-react";
 
 const initialState = {
@@ -74,9 +75,12 @@ class Dashboard extends React.Component {
                     <CreateClaim />
                   </Grid.Column>
                 </Grid.Row>
-                <Grid.Row columns={1}>
+                <Grid.Row columns={2}>
                   <Grid.Column>
                     <ShowPlans props={data.getCurrentUser.plans} />
+                  </Grid.Column>
+                  <Grid.Column>
+                    <ChatBox />
                   </Grid.Column>
                 </Grid.Row>
               </Grid>

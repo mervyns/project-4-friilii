@@ -7,4 +7,4 @@ const claimSchema = new Schema({
   reason: String
 });
 
-module.exports = mongoose.model('Plan', claimSchema)
+module.exports = mongoose.model('Claim', claimSchema)

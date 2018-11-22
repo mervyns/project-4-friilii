@@ -13,6 +13,7 @@ const typeDefs = gql`
     profile: Profile
     plans: [Plan!]
   }
+
 scalar Date
 
   type Profile {
@@ -47,18 +48,8 @@ scalar Date
     planName: String
     plan: Plan!
     reason: String
-    upload: File
   }
 
-  type Query {
-    getUsers: [User]
-    getCurrentUser(username: String): User
-    getUser(id: ID!): User
-    getProfile(userId: String): Profile
-    getPlans(userId: String): [Plan]
-    getPlansByName(planName: String) [Plan]
-    allChats: [Chat]
-  }
 
   type Chat {
     id: ID!
@@ -67,14 +58,28 @@ scalar Date
     createdAt: String
   }
 
+  type Query {
+    getUsers: [User]
+    getCurrentUser(username: String): User
+    getUser(id: ID!): User
+    getProfile(userId: String): Profile
+    getPlans(userId: String): [Plan]
+    getPlansByName(planName: String): [Plan]
+    allChats: [Chat]
+  }
+
   type Mutation {
     createUser(username: String!, email: String!, password: String!, role: String): User
     login(username: String!, password: String!): User
     createProfile(firstName: String!, lastName: String!, birthDate: String!, userId: String!): Profile
     createPlan(planName: String!, sumInsured: String!, premium: String, dateStart: String!, dateEnd: String!, userId: String!): Plan
-    createClaim(planName: String!, amountClaimed: String!, reason: String!)
+    createClaim(planName: String!, amountClaimed: String!, reason: String!) : Claim
     changeEmail(email: String): User
-    createChat(from: String, content: String!, createdAt:String)
+    createChat(from: String, content: String!, createdAt: String): Chat
+  }
+
+  type Subscription {
+    newChat: Chat
   }
   `;
 

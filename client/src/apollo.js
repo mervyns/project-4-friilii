@@ -2,6 +2,7 @@ import ApolloClient from "apollo-client";
 import { ApolloLink } from "apollo-link";
 import { createHttpLink } from "apollo-link-http";
 import { InMemoryCache } from "apollo-cache-inmemory";
+import { WebSocketLink } from 'apollo-link-ws'
 
 const hostname = window && window.location && window.location.hostname;
 const graphqlHost =
@@ -16,6 +17,7 @@ const httpLink = createHttpLink({
     console.log('networkError', networkError)
   }
 });
+
 const AUTH_TOKEN = "token";
 const REFRESH_TOKEN = "refreshToken";
 

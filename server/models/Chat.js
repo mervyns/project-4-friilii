@@ -7,4 +7,4 @@ const chatSchema = new Schema({
   createdAt: String
 });
 
-module.exports = mongoose.model('Plan', chatSchema)
+module.exports = mongoose.model('Chat', chatSchema)

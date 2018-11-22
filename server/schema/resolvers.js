@@ -2,6 +2,9 @@ const {
   AuthenticationError,
   ForbiddenError
 } = require("apollo-server-express");
+const {
+  PubSub
+} = require('graphql-subscriptions');
 const bcrypt = require("bcrypt");
 const dotenv = require("dotenv");
 const User = require("../models/User");
@@ -9,12 +12,18 @@ const Profile = require("../models/Profile");
 const Plan = require("../models/Plan");
 const Claim = require('../models/Claim')
 const Chat = require('../models/Chat')
-const { GraphQLScalarType } = require("graphql");
-const { Kind } = require("graphql/language");
+const {
+  GraphQLScalarType
+} = require("graphql");
+const {
+  Kind
+} = require("graphql/language");
 
 dotenv.config();
+const pubsub = new PubSub();
 
 const resolvers = {
+
   User: {
     profile: (root, args) =>
       Profile.findOne({
@@ -46,8 +55,10 @@ const resolvers = {
     getCurrentUser: async (root, args, context) => {
       // if (!context.loggedInUser)
       // throw new ForbiddenError("You must be logged in!");
-      
-      const user = await User.findOne({ username: args.username });
+
+      const user = await User.findOne({
+        username: args.username
+      });
       return user;
     },
     getUser: (root, args, context) => {
@@ -120,12 +131,21 @@ const resolvers = {
         throw new Error(err);
       }
     },
-    changeEmail: async (root, { currentEmail, newEmail }, { User }) => {
-      const user = await User.findOneAndUpdate(
-        { email: currentEmail },
-        { $set: { email: newEmail } },
-        { new: true }
-      );
+    changeEmail: async (root, {
+      currentEmail,
+      newEmail
+    }, {
+      User
+    }) => {
+      const user = await User.findOneAndUpdate({
+        email: currentEmail
+      }, {
+        $set: {
+          email: newEmail
+        }
+      }, {
+        new: true
+      });
       if (!user) {
         throw new Error("User Not Found");
       }
@@ -149,6 +169,21 @@ const resolvers = {
       // if (!context.loggedInUser)
       //   throw new ForbiddenError("You need to be logged in to create a Plan");
       return Claim.create(args);
+    },
+    createChat: (root, args) => {
+      const newChat = {
+        content: args.content
+      }
+      Chat.create(args)
+      pubsub.publish('new chats', {
+        newChat
+      });
+      return newChat
+    }
+  },
+  Subscription: {
+    newChat: {
+      subscribe: () => pubsub.asyncIterator('new chats')
     }
   },
   // Creating a new Scalar Type for Date
