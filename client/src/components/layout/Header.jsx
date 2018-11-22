@@ -3,6 +3,7 @@ import { Menu } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import jwt from "jsonwebtoken";
 import * as Cookies from "es-cookie";
+import withSession from "../../hoc/withSession";
 
 const dotenv = require("dotenv");
 
@@ -13,9 +14,9 @@ const initialState = {
   loggedIn: false
 };
 
-export default class Header extends Component {
+class Header extends Component {
   constructor(props) {
-    super();
+    super(props);
 
     this.state = {
       ...initialState
@@ -24,8 +25,8 @@ export default class Header extends Component {
 
   componentWillMount() {
     const token = Cookies.get("token");
-    if(token) {
-      this.setState({loggedIn: true})
+    if (token) {
+      return this.setState({ loggedIn: true });
     }
   }
 
@@ -33,19 +34,31 @@ export default class Header extends Component {
 
   render() {
     const { activeItem, loggedIn } = this.state;
-
+    console.log(this.props);
     return (
-      <Menu>
-        <Menu.Item
-          as={Link}
-          to="/"
-          name="Home"
-          active={activeItem === "Home"}
-          onClick={this.handleItemClick}
-        >
-          Home
-        </Menu.Item>
-        {loggedIn === false ? (
+      <Menu inverted color='pink'>
+        {loggedIn == false ? (
+          <Menu.Item
+            as={Link}
+            to="/"
+            name="Home"
+            active={activeItem === "Home"}
+            onClick={this.handleItemClick}
+          >
+            Home
+          </Menu.Item>
+        ) : (
+          <Menu.Item
+            as={Link}
+            to="/dashboard"
+            name="Home"
+            active={activeItem === "Home"}
+            onClick={this.handleItemClick}
+          >
+            Home
+          </Menu.Item>
+        )}
+        {loggedIn == false && (
           <Menu.Item
             as={Link}
             to="/signup"
@@ -55,45 +68,44 @@ export default class Header extends Component {
           >
             Sign Up
           </Menu.Item>
-        ) : (
+        )}
+        {loggedIn == false && (
           <Menu.Item
             as={Link}
-            to="/signup"
-            name="Sign Up"
-            active={activeItem === "Sign Up"}
+            to="/login"
+            name="Login"
+            active={activeItem === "Login"}
             onClick={this.handleItemClick}
           >
-            Signup2
+            Login
           </Menu.Item>
         )}
-        <Menu.Item
-          as={Link}
-          to="/login"
-          name="Login"
-          active={activeItem === "Login"}
-          onClick={this.handleItemClick}
-        >
-          Login
-        </Menu.Item>
-        <Menu.Item
-          as={Link}
-          to="/createprofile"
-          name="Create Profile"
-          active={activeItem === "Create Profile"}
-          onClick={this.handleItemClick}
-        >
-          Create Profile
-        </Menu.Item>
-        <Menu.Item
-          as={Link}
-          to="/createplan"
-          name="Create Plan"
-          active={activeItem === "Create Plan"}
-          onClick={this.handleItemClick}
-        >
-          Get Insured
-        </Menu.Item>
+        {loggedIn == true && (
+          <Menu.Item
+            as={Link}
+            to="/createprofile"
+            name="Create Profile"
+            active={activeItem === "Create Profile"}
+            onClick={this.handleItemClick}
+          >
+            Create Profile
+          </Menu.Item>
+        )}
+
+        {loggedIn == true && (
+          <Menu.Item
+            as={Link}
+            to="/createplan"
+            name="Create Plan"
+            active={activeItem === "Create Plan"}
+            onClick={this.handleItemClick}
+          >
+            Get Insured
+          </Menu.Item>
+        )}
       </Menu>
     );
   }
 }
+
+export default withSession(Header);

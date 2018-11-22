@@ -7,6 +7,7 @@ import client from "./apollo";
 import Header from "./components/layout/Header";
 import Landing from "./components/layout/Landing";
 import Login from "./components/auth/Login";
+import Signup from "./components/auth/Signup";
 import UserDetails from './components/auth/UserDetails'
 import CreateProfile from './components/user/CreateProfile'
 import CreatePlan from './components/user/CreatePlan'
@@ -19,6 +20,7 @@ const App = () => {
       <ApolloProvider client={client}>
         <Header />
         <Route exact path="/" component={Landing} />
+        <Route exact path="/signup" component={Signup} />
         <Route exact path="/login" component={Login} />
         <Route exact path="/userdetails" component={UserDetails} />
         <Route exact path="/createprofile" component={CreateProfile} />

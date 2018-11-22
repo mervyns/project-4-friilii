@@ -26,8 +26,9 @@ const initialState = {
 };
 
 const planOptions = [
-    {key: 'incomeLoss', name:'incomeLoss', text:'Loss of Income Plan', value: 'incomeLoss'},
-    {key: 'medicalPlan', name: 'medicalPlan',text:'Medical Plan', value: 'medicalPlan'}
+  {key: 'incomeLoss', name:'incomeLoss', text:'Loss of Income Plan', value: 'incomeLoss'},
+  {key: 'medicalPlan', name: 'medicalPlan',text:'Medical Insurance Plan', value: 'medicalPlan'},
+  {key: 'transportPlan', name:'transportPlan', text:'Transport Insurance Plan', value: 'transportPlan'}
 ]
 
 class CreatePlan extends React.Component {
@@ -53,7 +54,7 @@ class CreatePlan extends React.Component {
   handleChangeforDropdown(event) {
     const value = event.currentTarget.innerText;
     this.setState({
-      planName:  value
+      planName: value
     });
   }
 
@@ -78,10 +79,8 @@ class CreatePlan extends React.Component {
     const {
       planName,
       sumInsured,
-      premium,
       dateStart,
-      dateEnd,
-      value
+      dateEnd
     } = this.state;
     const token = Cookies.get("token");
     const decodedToken = decode(token);
@@ -133,11 +132,12 @@ class CreatePlan extends React.Component {
                               <Form.Input name="planName">
                         <Dropdown
                             fluid
+                            search
+                            selection
                             name="planName"
                             type="text"
                             label='Select your plan'
                             options={planOptions}
-                            value={planName}
                             onChange={this.handleChangeforDropdown.bind(this)}
                             placeholder='Select your Plan'
                             />

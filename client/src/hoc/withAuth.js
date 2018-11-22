@@ -17,16 +17,11 @@ const withAuth = conditionFunc => Component => props => {
         if (loading) return null;
 
         if (typeof document !== undefined) {
-          const tokenExpired = Cookies.get("jsonwebtoken");
+          const token = Cookies.get("token");
 
-          if (tokenExpired === undefined)
+          if (token === undefined)
           console.log("token expired")
             return <Login {...props} refetch={refetch} />;
-        }
-
-        if (props.session.getCurrentUser == null){
-        console.log("no user session found")
-          return <Login {...props} refetch={refetch} />;
         }
         return conditionFunc(data) ? (
           <Component {...props} />,

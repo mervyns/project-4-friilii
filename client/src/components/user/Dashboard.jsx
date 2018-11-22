@@ -5,9 +5,11 @@ import { withRouter } from "react-router-dom";
 import decode from "jwt-decode";
 import * as Cookies from "es-cookie";
 import InfoBox from "../layout/InfoBox";
-import ShowPlans from './ShowPlans'
-import ShowProfile from './ShowProfile'
-
+import ShowPlans from "./ShowPlans";
+import ShowProfile from "./ShowProfile";
+import CreateClaim from "./CreateClaim";
+import CreatePlan from './CreatePlan';
+import { Grid } from "semantic-ui-react";
 
 const initialState = {
   username: "",
@@ -55,16 +57,29 @@ class Dashboard extends React.Component {
             if (error) return <h1>Error</h1>;
             let currentUserId = data.getCurrentUser.id;
             return (
-              <div>
-                <InfoBox username={data.getCurrentUser.username} />
-                <div>
-                  <ShowProfile props={data.getCurrentUser.profile}></ShowProfile>
-                </div>
-                <h1>{data.getCurrentUser.profile.firstName}</h1>
-                <h1>{data.getCurrentUser.profile.lastName}</h1>
-                <h1>{data.getCurrentUser.plans[0].planName}</h1>
-                <ShowPlans props={data.getCurrentUser.plans} />
-              </div>
+              <Grid divided="vertically" celled>
+                <Grid.Row color='orange'>
+                <Grid.Column>
+                  <InfoBox username={data.getCurrentUser.username} />
+                  </Grid.Column>
+                </Grid.Row>
+                <Grid.Row columns={3}>
+                  <Grid.Column>
+                    <ShowProfile props={data.getCurrentUser.profile} />
+                  </Grid.Column>
+                  <Grid.Column>
+                    <CreatePlan />
+                  </Grid.Column>
+                  <Grid.Column>
+                    <CreateClaim />
+                  </Grid.Column>
+                </Grid.Row>
+                <Grid.Row columns={1}>
+                  <Grid.Column>
+                    <ShowPlans props={data.getCurrentUser.plans} />
+                  </Grid.Column>
+                </Grid.Row>
+              </Grid>
             );
           }}
         </Query>

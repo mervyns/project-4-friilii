@@ -7,6 +7,8 @@ const dotenv = require("dotenv");
 const User = require("../models/User");
 const Profile = require("../models/Profile");
 const Plan = require("../models/Plan");
+const Claim = require('../models/Claim')
+const Chat = require('../models/Chat')
 const { GraphQLScalarType } = require("graphql");
 const { Kind } = require("graphql/language");
 
@@ -62,6 +64,14 @@ const resolvers = {
       return Plan.find({
         userId: args.userId
       });
+    },
+    getPlansByName: (root, args, context) => {
+      return Plan.find({
+        planName: args.planName
+      });
+    },
+    allChats: (root, args, context) => {
+      return Chat.find({})
     }
   },
   Mutation: {
@@ -134,6 +144,11 @@ const resolvers = {
       // if (!context.loggedInUser)
       //   throw new ForbiddenError("You need to be logged in to create a Plan");
       return Plan.create(args);
+    },
+    createClaim: (root, args, context) => {
+      // if (!context.loggedInUser)
+      //   throw new ForbiddenError("You need to be logged in to create a Plan");
+      return Claim.create(args);
     }
   },
   // Creating a new Scalar Type for Date

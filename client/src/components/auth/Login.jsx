@@ -47,6 +47,7 @@ class Login extends React.Component {
         // await this.props.refetch();
         this.clearState();
         // this.props.history.push('/dashboard');
+        this.forceUpdate()
       })
       .catch(error => {
         this.setState({

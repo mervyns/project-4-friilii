@@ -88,3 +88,13 @@ mutation($planName: String!, $sumInsured: String!, $premium: String, $dateStart:
   }
 }
 `;
+
+export const CREATE_CLAIM = gql `
+mutation($planName: String!, $amountClaimed: String!, $reason: String){
+  createClaim(planName: $planName, amountClaimed: $amountClaimed, reason: $reason){
+    planName
+    amountClaimed
+    reason
+  }
+}
+`;
