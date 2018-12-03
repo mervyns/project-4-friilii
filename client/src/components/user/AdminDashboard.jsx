@@ -1,16 +1,17 @@
 import React, { Fragment } from "react";
 import { Query } from "react-apollo";
-import { GET_CURRENT_USER } from "../../queries";
+import { GET_ALL_PLANS, GET_USERS } from "../../queries";
 import { withRouter } from "react-router-dom";
 import decode from "jwt-decode";
 import * as Cookies from "es-cookie";
 import InfoBox from "../layout/InfoBox";
 import ShowPlans from "./ShowPlans";
+import ShowUsers from "./ShowUsers";
 import ShowProfile from "./ShowProfile";
 import CreateClaim from "./CreateClaim";
-import CreatePlan from './CreatePlan';
-import ChatBox from './ChatBox'
-import { Grid } from "semantic-ui-react";
+import CreatePlan from "./CreatePlan";
+import ChatBox from "./ChatBox";
+import { Grid, Table } from "semantic-ui-react";
 
 const initialState = {
   username: "",
@@ -22,7 +23,7 @@ const initialState = {
   passwordMatch: null
 };
 
-class Dashboard extends React.Component {
+class AdminDashboard extends React.Component {
   constructor(props) {
     super();
     this.state = {
@@ -47,39 +48,31 @@ class Dashboard extends React.Component {
     console.log(decodedToken);
     return (
       <Fragment>
-        <Query
-          query={GET_CURRENT_USER}
-          variables={{
-            username: decodedToken.username
+        <Query query={GET_USERS}>
+          {({ data, loading, error }) => {
+            if (loading) return <h1>Loading</h1>;
+            if (error) return <h1>Error</h1>;
+
+            return (
+              <Grid divided="vertically" celled>
+                <Grid.Row color="olive">
+                  <Grid.Column>
+                    <ShowUsers props={data.getUsers} />
+                  </Grid.Column>
+                </Grid.Row>
+              </Grid>
+            );
           }}
-        >
+        </Query>
+        <Query query={GET_ALL_PLANS}>
           {({ data, loading, error }) => {
             if (loading) return <h1>Loading</h1>;
             if (error) return <h1>Error</h1>;
             return (
               <Grid divided="vertically" celled>
-                <Grid.Row color='orange'>
-                <Grid.Column>
-                  <InfoBox username={data.getCurrentUser.username} />
-                  </Grid.Column>
-                </Grid.Row>
-                <Grid.Row columns={3}>
+                <Grid.Row color="orange">
                   <Grid.Column>
-                    <ShowProfile props={data.getCurrentUser.profile} />
-                  </Grid.Column>
-                  <Grid.Column>
-                    <CreatePlan />
-                  </Grid.Column>
-                  <Grid.Column>
-                    <CreateClaim />
-                  </Grid.Column>
-                </Grid.Row>
-                <Grid.Row columns={2}>
-                  <Grid.Column>
-                    <ShowPlans props={data.getCurrentUser.plans} />
-                  </Grid.Column>
-                  <Grid.Column>
-                    <ChatBox />
+                    <ShowPlans props={data.getAllPlans} />
                   </Grid.Column>
                 </Grid.Row>
               </Grid>
@@ -91,4 +84,4 @@ class Dashboard extends React.Component {
   }
 }
 
-export default withRouter(Dashboard);
+export default withRouter(AdminDashboard);

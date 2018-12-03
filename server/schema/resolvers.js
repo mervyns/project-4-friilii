@@ -48,8 +48,8 @@ const resolvers = {
   },
   Query: {
     getUsers: (root, args, context) => {
-      if (!context.loggedInUser)
-        throw new ForbiddenError("You must be logged in!");
+      // if (!context.loggedInUser)
+      //   throw new ForbiddenError("You must be logged in!");
       return User.find({});
     },
     getCurrentUser: async (root, args, context) => {
@@ -70,6 +70,9 @@ const resolvers = {
       return Profile.findOne({
         userId: args.userId
       });
+    },
+    getAllPlans:(root, args) => {
+        return Plan.find({});
     },
     getPlans: (root, args, context) => {
       return Plan.find({

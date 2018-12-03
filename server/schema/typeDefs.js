@@ -63,6 +63,7 @@ scalar Date
     getCurrentUser(username: String): User
     getUser(id: ID!): User
     getProfile(userId: String): Profile
+    getAllPlans: [Plan]
     getPlans(userId: String): [Plan]
     getPlansByName(planName: String): [Plan]
     allChats: [Chat]

@@ -2,7 +2,6 @@ const express = require('express')
 const {
     ApolloServer
 } = require('apollo-server-express')
-const ApolloClient, {createNetworkInterface} = require('apollo-client';)
 const {
     graphqlExpress,
     graphiqlExpress,

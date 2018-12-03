@@ -142,9 +142,8 @@ class CreateProfile extends React.Component {
                               value={birthDate}
                               onChange={this.handleChange.bind(this)}
                             />
-
                             <Button color="teal" fluid size="large">
-                              Login
+                              Create My Profile
                             </Button>
                           </Segment>
                         </Form>

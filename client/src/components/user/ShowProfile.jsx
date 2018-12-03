@@ -27,7 +27,7 @@ const ShowProfile = ({ props }) => (
           <Form.Group>
             <Form.Input
               label="Birth Date"
-              value={moment(parseInt(props.birthDate)).format("DD/MM/YY")}
+              value={moment(parseInt(props.birthDate)).format("DD/MM/YYYY")}
             />
           </Form.Group>
                 <Button type="submit" color="teal" fluid size="large">Update Profile</Button>

@@ -38,6 +38,27 @@ mutation login(
   }
 `;
 
+export const GET_USERS = gql`
+query {
+    getUsers{
+        username
+        email
+    }
+}
+`;
+
+
+export const GET_ALL_PLANS = gql`
+query {
+    getAllPlans{
+        planName
+        sumInsured
+        dateStart
+        dateEnd
+        userId
+    }
+}
+`
 
 export const GET_CURRENT_USER = gql `
     query($username: String!) {
