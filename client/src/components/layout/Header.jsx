@@ -32,11 +32,16 @@ class Header extends Component {
 
   handleItemClick = (e, { name }) => this.setState({ activeItem: name });
 
+  logOut = e => {
+    Cookies.remove("token");
+    window.location.href = ("/")
+  };
+
   render() {
     const { activeItem, loggedIn } = this.state;
     console.log(this.props);
     return (
-      <Menu inverted color='pink'>
+      <Menu inverted color="teal">
         {loggedIn == false ? (
           <Menu.Item
             as={Link}
@@ -101,6 +106,12 @@ class Header extends Component {
             onClick={this.handleItemClick}
           >
             Get Insured
+          </Menu.Item>
+        )}
+
+        {loggedIn == true && (
+          <Menu.Item name="Log Out" onClick={this.logOut}>
+            Log Out
           </Menu.Item>
         )}
       </Menu>

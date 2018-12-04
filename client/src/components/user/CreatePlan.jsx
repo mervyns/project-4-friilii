@@ -57,7 +57,7 @@ class CreatePlan extends React.Component {
   }
 
   handleSubmit(event, createProfile) {
-    event.preventDefault();
+    // event.preventDefault();
     createProfile()
       .then(async ({ data }) => {
         console.log(data);
@@ -65,6 +65,7 @@ class CreatePlan extends React.Component {
         // await this.props.refetch();
         this.clearState();
         // this.props.history.push('/dashboard');
+        window.location.reload();
       })
       .catch(error => {
         this.setState({

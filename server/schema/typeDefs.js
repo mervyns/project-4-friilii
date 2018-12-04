@@ -2,7 +2,7 @@ const {
   gql
 } = require('apollo-server-express')
 
-const typeDefs = gql`
+const typeDefs = gql `
   type User {
     id: ID!
     username: String!
@@ -57,6 +57,11 @@ scalar Date
     createdAt: String
   }
 
+  type Message {
+    author : String
+    content : String
+  }
+
   type Query {
     getUsers: [User]
     getCurrentUser(username: String): User
@@ -67,6 +72,7 @@ scalar Date
     getPlansByName(planName: String): [Plan]
     getAllClaims: [Claim]
     allChats: [Chat]
+    getAllMessages: [Message]
   }
 
   type Mutation {
@@ -77,6 +83,7 @@ scalar Date
     createClaim(planName: String!, amountClaimed: String!, reason: String!): Claim
     changeEmail(email: String): User
     createChat(from: String, content: String!, createdAt: String): Chat
+    addMessage(author: String!, content:String!): [Message]
   }
 
   type Subscription {
@@ -84,4 +91,4 @@ scalar Date
   }
   `;
 
-  module.exports = typeDefs
+module.exports = typeDefs

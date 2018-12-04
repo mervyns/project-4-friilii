@@ -21,6 +21,8 @@ const {
 
 dotenv.config();
 const pubsub = new PubSub();
+// Empty variable to hold chatroom messages.  New messages will be pushed to the front of the array as they come in.
+let roomContents = [{author: "mervyn", content:"testing"}]
 
 const resolvers = {
 
@@ -45,6 +47,9 @@ const resolvers = {
       User.findOne({
         id: root.userId
       })
+  },
+  Message: {
+    author: (root, args) => root.author
   },
   Query: {
     getUsers: (root, args, context) => {
@@ -89,6 +94,9 @@ const resolvers = {
     },
     allChats: (root, args, context) => {
       return Chat.find({})
+    },
+    getAllMessages: (root, args, context) => {
+      return roomContents
     }
   },
   Mutation: {
@@ -185,6 +193,10 @@ const resolvers = {
         newChat
       });
       return newChat
+    },
+    addMessage: (root, args) => {
+      roomContents.unshift(args)
+      return roomContents
     }
   },
   Subscription: {

@@ -62,7 +62,7 @@ class AdminDashboard extends React.Component {
           }}
         </Query>
         <Grid divided="vertically" celled>
-          <Grid.Row color="orange">
+          <Grid.Row color="blue">
             <Grid columns={2} divided>
               <Query query={GET_ALL_PLANS}>
                 {({ data, loading, error }) => {

@@ -8,8 +8,8 @@ import InfoBox from "../layout/InfoBox";
 import ShowPlans from "./ShowPlans";
 import ShowProfile from "./ShowProfile";
 import CreateClaim from "./CreateClaim";
-import CreatePlan from './CreatePlan';
-import ChatBox from './ChatBox'
+import CreatePlan from "./CreatePlan";
+import ChatBox from "./ChatBox";
 import { Grid } from "semantic-ui-react";
 
 const initialState = {
@@ -58,9 +58,9 @@ class Dashboard extends React.Component {
             if (error) return <h1>Error</h1>;
             return (
               <Grid divided="vertically" celled>
-                <Grid.Row color='orange'>
-                <Grid.Column>
-                  <InfoBox username={data.getCurrentUser.username} />
+                <Grid.Row color="yellow">
+                  <Grid.Column>
+                    <InfoBox username={data.getCurrentUser.username} />
                   </Grid.Column>
                 </Grid.Row>
                 <Grid.Row columns={3}>
