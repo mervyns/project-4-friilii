@@ -7,12 +7,10 @@ import * as Cookies from "es-cookie";
 import {
   Button,
   Form,
-  Message,
   Grid,
   Segment,
   Header,
-  Dropdown,
-  Select
+  Dropdown
 } from "semantic-ui-react";
 
 const initialState = {

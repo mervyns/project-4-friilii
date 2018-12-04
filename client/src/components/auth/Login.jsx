@@ -46,8 +46,8 @@ class Login extends React.Component {
         Cookies.set("token", data.login.token);
         // await this.props.refetch();
         this.clearState();
-        // this.props.history.push('/dashboard');
         this.forceUpdate()
+        this.props.history.push('/dashboard');
       })
       .catch(error => {
         this.setState({

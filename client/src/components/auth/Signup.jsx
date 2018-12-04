@@ -28,7 +28,7 @@ class Signup extends React.Component {
         Cookies.set("token", data.createUser.token);
         // await this.props.refetch();
         this.setState({ username: "", email:'', password:'' });
-        // this.props.history.push("/dashboard");
+        this.props.history.push("/createprofile");
       })
       .catch(error => {
         console.log(error);

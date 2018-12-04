@@ -1,24 +1,22 @@
 import React, { Fragment } from "react";
 import { Query, Mutation } from "react-apollo";
-import { CREATE_CLAIM, CREATE_USER_PLAN } from "../../queries";
+import { CREATE_CLAIM } from "../../queries";
 import { withRouter } from "react-router-dom";
 import decode from "jwt-decode";
 import * as Cookies from "es-cookie";
 import {
   Button,
   Form,
-  Message,
   Grid,
   Segment,
   Header,
   Dropdown,
-  Select
 } from "semantic-ui-react";
 
 const initialState = {
-  reason: "",
-  amountClaimed: "",
   planName: "",
+  amountClaimed: "",
+  reason: "",
   error: ""
 };
 
@@ -74,9 +72,9 @@ class CreateClaim extends React.Component {
     });
   }
 
-  handleSubmit(event, createProfile) {
+  handleSubmit(event, createClaim) {
     event.preventDefault();
-    createProfile()
+    createClaim()
       .then(async ({ data }) => {
         console.log(data);
         // Cookies.set("token", data.login.token);

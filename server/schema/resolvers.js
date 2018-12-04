@@ -71,8 +71,8 @@ const resolvers = {
         userId: args.userId
       });
     },
-    getAllPlans:(root, args) => {
-        return Plan.find({});
+    getAllPlans: (root, args) => {
+      return Plan.find({});
     },
     getPlans: (root, args, context) => {
       return Plan.find({
@@ -83,6 +83,9 @@ const resolvers = {
       return Plan.find({
         planName: args.planName
       });
+    },
+    getAllClaims: (root, args, context) => {
+      return Claim.find({})
     },
     allChats: (root, args, context) => {
       return Chat.find({})

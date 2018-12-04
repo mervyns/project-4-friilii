@@ -46,7 +46,6 @@ scalar Date
     id: ID!
     amountClaimed: Int!
     planName: String
-    plan: Plan!
     reason: String
   }
 
@@ -66,6 +65,7 @@ scalar Date
     getAllPlans: [Plan]
     getPlans(userId: String): [Plan]
     getPlansByName(planName: String): [Plan]
+    getAllClaims: [Claim]
     allChats: [Chat]
   }
 
@@ -74,7 +74,7 @@ scalar Date
     login(username: String!, password: String!): User
     createProfile(firstName: String!, lastName: String!, birthDate: String!, userId: String!): Profile
     createPlan(planName: String!, sumInsured: String!, premium: String, dateStart: String!, dateEnd: String!, userId: String!): Plan
-    createClaim(planName: String!, amountClaimed: String!, reason: String!) : Claim
+    createClaim(planName: String!, amountClaimed: String!, reason: String!): Claim
     changeEmail(email: String): User
     createChat(from: String, content: String!, createdAt: String): Chat
   }
